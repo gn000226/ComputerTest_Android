@@ -13,7 +13,8 @@ import kotlin.math.floor
 
 /* 加減乘除等號 **/
 enum class OperationType {
-    add, subtract, multiply, divide, none, percent
+
+    Add, Subtract, Multiply, Divide, None, Percent
 }
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     var isCalculation = false
 
     // 建立物件(操作)，遵從enum > 判斷是否有點擊過計算的Item，預設為 .none
-    var operation = OperationType.none
+    var operation = OperationType.None
 
     //確認是否已點擊小數點
     var isPoint = false
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                         setPercent()    // 百分比
                     }
                     3 -> {
-                        operation = OperationType.divide
+                        operation = OperationType.Divide
                         signTextView.text = "/"
                         isCalculation = true
                         previousNumber = numberOnScreen
@@ -81,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                         numberArray.clear()
                     }
                     7 -> {
-                        operation = OperationType.multiply
+                        operation = OperationType.Multiply
                         signTextView.text = "x"
                         isCalculation = true
                         previousNumber = numberOnScreen
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                         numberArray.clear()
                     }
                     11 -> {
-                        operation = OperationType.subtract
+                        operation = OperationType.Subtract
                         signTextView.text = "-"
                         isCalculation = true
                         previousNumber = numberOnScreen
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                         numberArray.clear()
                     }
                     15 -> {
-                        operation = OperationType.add
+                        operation = OperationType.Add
                         signTextView.text = "+"
                         isCalculation = true
                         previousNumber = numberOnScreen
@@ -171,7 +172,7 @@ class MainActivity : AppCompatActivity() {
     /* 百分比 */
     fun setPercent() {
         signTextView.text = "%"
-        operation = OperationType.percent
+        operation = OperationType.Percent
         isCalculation = true
         previousNumber = numberOnScreen
     }
@@ -185,7 +186,7 @@ class MainActivity : AppCompatActivity() {
         numberArray.clear()
         isCalculation = false
         isPoint = false
-        operation = OperationType.none
+        operation = OperationType.None
         newStart = true
     }
 
@@ -212,26 +213,26 @@ class MainActivity : AppCompatActivity() {
     fun getAnswer() {
         if (isCalculation) {
             when (operation) {
-                OperationType.add -> {
+                OperationType.Add -> {
                     numberOnScreen = (BigDecimal(previousNumber + numberOnScreen)).setScale(7,BigDecimal.ROUND_DOWN).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
-                OperationType.subtract -> {
+                OperationType.Subtract -> {
                     numberOnScreen = (BigDecimal(previousNumber - numberOnScreen)).setScale(7,BigDecimal.ROUND_DOWN).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
-                OperationType.multiply -> {
+                OperationType.Multiply -> {
                     numberOnScreen = (BigDecimal(previousNumber * numberOnScreen)).setScale(7,BigDecimal.ROUND_DOWN).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
-                OperationType.divide -> {
+                OperationType.Divide -> {
                     numberOnScreen = (BigDecimal(previousNumber / numberOnScreen)).setScale(7,BigDecimal.ROUND_DOWN).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
-                OperationType.none -> {
+                OperationType.None -> {
                     numberTextView.text = "0"
                 }
-                OperationType.percent -> {
+                OperationType.Percent -> {
                     numberOnScreen = (BigDecimal(previousNumber) * BigDecimal(0.01)).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
