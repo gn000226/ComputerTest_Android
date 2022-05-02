@@ -213,20 +213,21 @@ class MainActivity : AppCompatActivity() {
     fun getAnswer() {
         if (isCalculation) {
             when (operation) {
+                // ROUND_HALF_UP > 四捨五入 到 指定位數(newScale)
                 OperationType.Add -> {
-                    numberOnScreen = (BigDecimal(previousNumber + numberOnScreen)).setScale(7,BigDecimal.ROUND_DOWN).toDouble()
+                    numberOnScreen = (BigDecimal(previousNumber + numberOnScreen)).setScale(7,BigDecimal.ROUND_HALF_UP).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
                 OperationType.Subtract -> {
-                    numberOnScreen = (BigDecimal(previousNumber - numberOnScreen)).setScale(7,BigDecimal.ROUND_DOWN).toDouble()
+                    numberOnScreen = (BigDecimal(previousNumber - numberOnScreen)).setScale(7,BigDecimal.ROUND_HALF_UP).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
                 OperationType.Multiply -> {
-                    numberOnScreen = (BigDecimal(previousNumber * numberOnScreen)).setScale(7,BigDecimal.ROUND_DOWN).toDouble()
+                    numberOnScreen = (BigDecimal(previousNumber * numberOnScreen)).setScale(7,BigDecimal.ROUND_HALF_UP).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
                 OperationType.Divide -> {
-                    numberOnScreen = (BigDecimal(previousNumber / numberOnScreen)).setScale(7,BigDecimal.ROUND_DOWN).toDouble()
+                    numberOnScreen = (BigDecimal(previousNumber / numberOnScreen)).setScale(7,BigDecimal.ROUND_HALF_UP).toDouble()
                     makeOkNumberString(numberOnScreen)
                 }
                 OperationType.None -> {
