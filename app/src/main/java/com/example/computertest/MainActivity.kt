@@ -194,7 +194,7 @@ class MainActivity : AppCompatActivity() {
     fun makeOkNumberString(number: Double) {
         // 最後要呈現的字串
         var finalText: String
-        if (number.equals( number.toInt()) ) {   // 無條件進位後的數值等於 原本的數值
+        if (floor(number) == number ) {   // 無條件進位後的數值等於 原本的數值
             finalText = "${number.toInt()}"         // 轉為Int (去除小數點)
         } else {
             // 否則不去除小數點
