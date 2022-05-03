@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.math.BigDecimal
@@ -13,7 +14,6 @@ import kotlin.math.floor
 
 /* 加減乘除等號 **/
 enum class OperationType {
-
     Add, Subtract, Multiply, Divide, None, Percent
 }
 
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     // Bool變數，是否重啟新的計算，避免上一次計算結果影響新的計算
     var newStart = true
-
+    //
     var numberArray = mutableListOf<Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,8 +70,8 @@ class MainActivity : AppCompatActivity() {
                     4, 5, 6, 8, 9, 10, 12, 13, 14, 17 -> {   // 數字
                         addNumber(position)
                     }
-                    2 -> {
-                        setPercent()    // 百分比
+                    2 -> {      // 百分比
+                        setPercent()
                     }
                     3 -> {
                         operation = OperationType.Divide
@@ -149,6 +149,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             numberOnScreen = "${numberTextView.text}".toDouble()
+            Log.d("Array:",numberArray.toString())
         }
     }
 
@@ -183,11 +184,11 @@ class MainActivity : AppCompatActivity() {
         signTextView.text = ""
         numberOnScreen = 0.0
         previousNumber = 0.0
-        numberArray.clear()
         isCalculation = false
         isPoint = false
         operation = OperationType.None
         newStart = true
+        numberArray.clear()
     }
 
     /* 顯示正確的數字字串 > 等號呼叫 **/
@@ -247,13 +248,19 @@ class MainActivity : AppCompatActivity() {
 
     /* 去位數 */
     fun cutNumber() {
+        var numString : String? = ""
         if (!newStart) {
             if (numberTextView.text != "0" && numberArray.size != 0) {
-                var numString : String? = ""
                 if (numberArray.size >= 2) {
-                    numberArray.removeAt(numberArray.size-1)
-                    for (i in 0 until numberArray.size) {
-                        numString += numberArray[i]
+                    if (numberTextView.text != "0." ) {
+                        numberArray.removeAt(numberArray.size-1)
+                        for (i in 0 until numberArray.size) {
+                            numString += numberArray[i]
+                        }
+                    } else {
+                        numberArray.clear()
+                        numberOnScreen = 0.0
+                        numString = "${numberOnScreen.toInt()}"
                     }
                 } else {
                     numberArray.clear()
@@ -261,7 +268,13 @@ class MainActivity : AppCompatActivity() {
                     numString = "${numberOnScreen.toInt()}"
                 }
                 numberTextView.text = numString
+            } else if ( numberTextView.text == "0") {
+                numberArray.clear()
+                numberOnScreen = 0.0
+                numString = "${numberOnScreen.toInt()}"
+                numberTextView.text = numString
             }
         }
+        Log.d("Array2:",numberArray.toString())
     }
 }
